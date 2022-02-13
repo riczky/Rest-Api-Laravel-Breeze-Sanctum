@@ -1,0 +1,42 @@
+Rest Server Laravel Breeze + Sanctum
+
+
+Contoh Request:
+//Login
+//post
+http://localhost:8000/api/login
+{
+    "email" : "admin@gmail.com",
+    "password" : "adminadmin"
+}
+
+//Logout
+//get
+http://localhost:8000/api/logout
+(Auth: Bearer Token)
+
+
+//create data
+//post
+http://localhost:8000/api/create
+{
+    "nama" : "riczky test",
+    "alamat" : "Jakarta pusat",
+    "no_telp" : "089121223521"
+}
+
+
+//update data
+//get
+http://localhost:8000/api/edit/5
+//post
+http://localhost:8000/api/edit/5
+{
+    "nama" : "Parjo",
+    "alamat": "Jawa Tengah",   
+    "no_telp" : "0891212231"
+}
+
+//delete data
+//get
+http://localhost:8000/api/delete/6
