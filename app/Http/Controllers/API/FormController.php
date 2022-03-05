@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\StudentResource;
 
 
 class FormController extends Controller
@@ -67,6 +68,7 @@ class FormController extends Controller
         ], 200);
     }
 
+    // Delete
     public function delete($id)
     {
         $student = Student::find($id)->delete();
@@ -74,6 +76,45 @@ class FormController extends Controller
         return response()->json([
             'message' => 'Data Berhasil di Hapus',
             'data_student' => $student
+        ], 200);
+    }
+
+    // Get All Data Students
+    // public function show()
+    // {
+    //     $student = Student::get();
+    //     return response()->json([
+    //         'message' => 'Data Berhasil di Tampilkan',
+    //         'data_student' => $student
+    //     ], 200);
+    // }
+
+
+    // Pagination
+    public function show(Request $request)
+    {
+        $per_page = $request->get('per_page');
+
+        $students = Student::paginate($per_page);
+
+        // $collectionStudent = StudentResource::collection($students);
+        foreach ($students as $key => $student) {
+            $data['id'] = $student->id;
+            $data['nama'] = $student->nama;
+            $data['alamat'] = $student->alamat;
+            $data['no_telp'] = $student->no_telp;
+            $datas[]        = $data;
+        }
+
+        $dataStudent['data'] = $datas;
+        // $dataStudent['data'] = $collectionStudent;
+        $dataStudent['next_page_url'] = $students->nextPageUrl();
+
+        return response()->json([
+            'message' => 'Data Berhasil di Tampilkan',
+            'data_student' => $dataStudent
+            // 'data_student' => $collectionStudent
+
         ], 200);
     }
 }
